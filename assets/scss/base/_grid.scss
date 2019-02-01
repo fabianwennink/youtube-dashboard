@@ -1,0 +1,112 @@
+$grid-width: 99%;
+$grid-gutter: 1%;
+
+$breakpoint-small: 28.125em; // 450px
+$breakpoint-med: 43.125em; // 690px
+$breakpoint-large: 60em; // 960px
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
+  height: 100%;
+}
+
+.row {
+  width: 95%;
+  position: relative;
+}
+
+.row [class*="col"] {
+  float: left;
+  min-height: 0.125rem;
+  margin: 0.5rem .5%;
+}
+
+.row::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.col-1-l,
+.col-2-l,
+.col-3-l,
+.col-4-l,
+.col-5-l,
+.col-6-l,
+.col-7-l,
+.col-8-l,
+.col-9-l,
+.col-10-l,
+.col-11-l,
+.col-12-l {
+  width: $grid-width;
+  box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+}
+
+.col-1-s { width:($grid-width / 12) - ($grid-gutter * 11 / 12); }
+.col-2-s { width: ($grid-width / 6) - ($grid-gutter * 10 / 12); }
+.col-3-s { width: ($grid-width / 4) - ($grid-gutter * 9 / 12); }
+.col-4-s { width: ($grid-width / 3) - ($grid-gutter * 8 / 12); }
+.col-5-s { width: ($grid-width / (12 / 5)) - ($grid-gutter * 7 / 12); }
+.col-6-s { width: ($grid-width / 2) - ($grid-gutter * 6 / 12); }
+.col-7-s { width: ($grid-width / (12 / 7)) - ($grid-gutter * 5 / 12); }
+.col-8-s { width: ($grid-width / (12 / 8)) - ($grid-gutter * 4 / 12); }
+.col-9-s { width: ($grid-width / (12 / 9)) - ($grid-gutter * 3 / 12); }
+.col-10-s { width: ($grid-width / (12 / 10)) - ($grid-gutter * 2 / 12); }
+.col-11-s { width: ($grid-width / (12 / 11)) - ($grid-gutter * 1 / 12); }
+.col-12-s { width: $grid-width; }
+
+.col-hide-s {
+  display:none;
+}
+
+@media only screen and (min-width: $breakpoint-med) {
+  .col-1-m { width:($grid-width / 12) - ($grid-gutter * 11 / 12); }
+  .col-2-m { width: ($grid-width / 6) - ($grid-gutter * 10 / 12); }
+  .col-3-m { width: ($grid-width / 4) - ($grid-gutter * 9 / 12); }
+  .col-4-m { width: ($grid-width / 3) - ($grid-gutter * 8 / 12); }
+  .col-5-m { width: ($grid-width / (12 / 5)) - ($grid-gutter * 7 / 12); }
+  .col-6-m { width: ($grid-width / 2) - ($grid-gutter * 6 / 12); }
+  .col-7-m { width: ($grid-width / (12 / 7)) - ($grid-gutter * 5 / 12); }
+  .col-8-m { width: ($grid-width / (12 / 8)) - ($grid-gutter * 4 / 12); }
+  .col-9-m { width: ($grid-width / (12 / 9)) - ($grid-gutter * 3 / 12); }
+  .col-10-m { width: ($grid-width / (12 / 10)) - ($grid-gutter * 2 / 12); }
+  .col-11-m { width: ($grid-width / (12 / 11)) - ($grid-gutter * 1 / 12); }
+  .col-12-m { width: $grid-width; }
+
+  .col-hide-s,
+  .col-hide-l {
+    display:block;
+  }
+
+  .col-hide-m {
+    display:none;
+  }
+}
+
+@media only screen and (min-width: $breakpoint-large) {
+  .col-1-l { width:($grid-width / 12) - ($grid-gutter * 11 / 12); }
+  .col-2-l { width: ($grid-width / 6) - ($grid-gutter * 10 / 12); }
+  .col-3-l { width: ($grid-width / 4) - ($grid-gutter * 9 / 12); }
+  .col-4-l { width: ($grid-width / 3) - ($grid-gutter * 8 / 12); }
+  .col-5-l { width: ($grid-width / (12 / 5)) - ($grid-gutter * 7 / 12); }
+  .col-6-l { width: ($grid-width / 2) - ($grid-gutter * 6 / 12); }
+  .col-7-l { width: ($grid-width / (12 / 7)) - ($grid-gutter * 5 / 12); }
+  .col-8-l { width: ($grid-width / (12 / 8)) - ($grid-gutter * 4 / 12); }
+  .col-9-l { width: ($grid-width / (12 / 9)) - ($grid-gutter * 3 / 12); }
+  .col-10-l { width: ($grid-width / (12 / 10)) - ($grid-gutter * 2 / 12); }
+  .col-11-l { width: ($grid-width / (12 / 11)) - ($grid-gutter * 1 / 12); }
+  .col-12-l { width: $grid-width; }
+
+  .col-hide-s,
+  .col-hide-m {
+    display:block;
+  }
+
+  .col-hide-l {
+    display:none;
+  }
+}
