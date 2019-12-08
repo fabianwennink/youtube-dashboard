@@ -2,28 +2,23 @@ $(document).on('ready', function() {
 
 	// YOUTUBE_KEY will be included via gulp (key.js file will be included - not uploaded)
 
-	const VIDEO_AMOUNT = 5;
+	const VIDEO_AMOUNT = 4;
 	const CHANNEL_CLASSES = 'channel col-6-l col-6-m col-12-s';
 	const YOUTUBE_API_URL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&channelId={0}&order=date&key={1}&maxResults={2}';
 	const ESCAPE_ENTITY_MAP = {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '/': '&#x2F;', '`': '&#x60;', '=': '&#x3D;'};
 
+	const CORS_FIXER_URL = 'https://cors-anywhere.herokuapp.com/';
+	const YOUTUBE_RSS_URL = 'https://www.youtube.com/feeds/videos.xml?channel_id={0}';
+	const YOUTUBE_RSS_CORS_URL = CORS_FIXER_URL.concat(YOUTUBE_RSS_URL);
+
+	let USING_RSS = false;
+
 	let channels = [
-		'UCKqH_9mk1waLgBiL2vT5b9g', // VanossGaming
-		'UCClNRixXlagwAd--5MwJKCw', // H2ODelirious
-		'UCvPW1W4WlpTgNezZzwIstLA', // Daithi De Nogla
-		'UCQiojTHkAvFvdCSajklqUXA', // Terroriser
-		'UCJQcOj0yUAef9Wq6wE7OWVA', // Moo
-		'UCbgtuRStKI_5ACSjubSTUPA', // BasicallyIDoWrk
-		'UC1o9zvRwIqP_K5ByWs-EVwA', // BigJigglyPanda
-		'UC-kOXc3gBwksVfmndSEz7jg', // I AM WILDCAT
-		'UCURh19hEVawK-H0Wl7KnR5Q', // Ohmwrecker
-		'UCdQWs2nw6w77Rw0t-37a4OA', // Cartoonz
-		'UCBvc7pmUp9wiZIFOXEp1sCg', // DemolitionRanch
-		'UCXuqSBlHAE6Xw-yeJA0Tunw', // Linus Tech Tips
-		'UC-lHJZR3Gqxm24_Vd_AJ5Yw', // PewDiePie
-		'UCmxePybUpZj8RRuWz6r8uTQ', // Politie Vlogger Jan-Willem
-		'UCV5mGxp-rtsGDAedDYnp7hA', // OffTheRanch
-		'UCMkWn0AHTnEmiyedn1diBJg' // ItsSkyLOL
+		'UCBR8-60-B28hp2BmDPdntcQ', // YouTube
+		'UCkRfArvrzheW2E7b6SVT7vQ', // YouTube Creators
+		'UCMDQxm7cUx3yXkfeHa5zJIQ', // YouTube Help
+		'UCEN58iXQg82TXgsDCjWqIkg', // YouTube Advertisers
+		'UCK8sQmJBp8GCxrOtXWBpyEA' // Google
 	];
 
 	init();
@@ -53,35 +48,46 @@ $(document).on('ready', function() {
 		let channelCache;
 		let channelName;
 
+		// Get use of RSS from cache
+		let tempRssUsage = localStorage.getItem('rss-use');
+		USING_RSS = (tempRssUsage === 'true');
+
+		changeFetchIcon();
+		
 		channels.forEach(function(channel) {
+			let channelElement = $('.channel[data-id="' + channel + '"]');
+			if(channelElement.length) {
+				channelElement.remove();
+			}
 
-			// Add the elements
-			let _this = addInnerChannel(channel);
-
-			$('.channels').append(_this);
+			$('.channels').append(addInnerChannel(channel));
 		});
 
-		// $('.channels').sortable();
-		// $('.channel').draggable({
-		// 	connectToSortable: ".channels",
-		// 	stop: function() {
-		// 		let order = [];
-		//
-		// 		$('.channels').find('.channel:not(.channel__search)').each(function(key, data) {
-		// 			order.push($(data).data('id'))
-		// 		});
-		//
-		// 		localStorage.setItem('order', JSON.stringify(order));
-		//
-		// 		// TODO function
-		// 		$('.toast').text('Saved channel order').fadeIn(400);
-		// 		setTimeout(function() {
-		// 			$('.toast').fadeOut(250);
-		// 		}, 3000);
-		// 	}
-		// });
+		$('.channels').sortable({
+			handle: '.drag-button',
+			tolerance: 'pointer',
+			accept: '.channel:not(.channel__search)',
+			start: function(event, ui) {
+				ui.item.data('data-order', ui.item.index());
+			},
+			stop: function(event, ui) {
+				const start_pos = ui.item.data('data-order');
+				if (start_pos !== ui.item.index()) {
+					let order = [];
+
+					$('.channels').find('.channel:not(.channel__search)').each(function(key, data) {
+						order.push($(data).data('id'))
+					});
+
+					localStorage.setItem('order', JSON.stringify(order));
+
+					showToast('Saved channel order');
+				}
+			}
+		});
 
 		channels.forEach(function(channel) {
+			console.log(USING_RSS);
 
 			// Add the elements
 			let _this = $(".channel[data-id='" + channel +"']");
@@ -100,29 +106,60 @@ $(document).on('ready', function() {
 					videos.append(addVideo(value));
 				});
 			} else {
-				$.ajax({
-					url: String.format(YOUTUBE_API_URL, channel, YOUTUBE_KEY, VIDEO_AMOUNT),
-					type:"GET",
-					async: true,
-					cache: false,
-					success:function(data) {
-						channelName = data.items[0].snippet.channelTitle;
+				if(USING_RSS) {
+					$.ajax({
+						url: String.format(YOUTUBE_RSS_CORS_URL, channel),
+						type: "GET",
+						dataType: "xml",
+						async: true,
+						cache: false,
+						success:function(xml) {
+							let $xml = $(xml);
 
-						_this.find(".channel__title").text(channelName);
-						_this.find(".channel__title").attr("href", "https://www.youtube.com/channel/" + channel);
+							channelName = $xml.find('author').find('name').first().text();
 
-						// Save the channel data to cache.
-						saveCache(channel, channelName, data.items);
+							_this.find(".channel__title").text(channelName);
+							_this.find(".channel__title").attr("href", "https://www.youtube.com/channel/" + channel);
 
-						// Load the cache right away, required since the addVideo() function
-						// expects a certain array format.
-						channelCache = loadCache(channel);
+							// Save the channel data to cache.
+							saveCache(channel, channelName, $xml.find('entry'));
 
-						$.each(channelCache.items, function(key, value) {
-							videos.append(addVideo(value));
-						});
-					}
-				});
+							// Load the cache right away, required since the addVideo() function
+							// expects a certain array format.
+							channelCache = loadCache(channel);
+
+							$.each(channelCache.items, function(key, value) {
+								videos.append(addVideo(value));
+							});
+						}
+					});
+				} else {
+					$.ajax({
+						url: String.format(YOUTUBE_API_URL, channel, YOUTUBE_KEY, VIDEO_AMOUNT),
+						type: "GET",
+						async: true,
+						cache: false,
+						success:function(data) {
+							channelName = data.items[0].snippet.channelTitle;
+
+							_this.find(".channel__title").text(channelName);
+							_this.find(".channel__title").attr("href", "https://www.youtube.com/channel/" + channel);
+
+							// Save the channel data to cache.
+							saveCache(channel, channelName, data.items);
+
+							// Load the cache right away, required since the addVideo() function
+							// expects a certain array format.
+							channelCache = loadCache(channel);
+
+							console.log(channelCache);
+
+							$.each(channelCache.items, function(key, value) {
+								videos.append(addVideo(value));
+							});
+						}
+					});
+				}
 			}
 
 			$('.channel:not(.channel__search)').append(_this);
@@ -189,17 +226,46 @@ $(document).on('ready', function() {
 	*	the stored videos cache and refresh the page to load the videos
 	*	from the API.
 	*/
-	$('.clear-cache').on('click', function(){
-		$(this).text('Refreshing...');
-		
-		$.each(localStorage, function(key, value) {
+	$('[data-func="refresh"]').on('click', function() {
+		let _this = $(this);
+		$(this).addClass('db-icon-spin');
+
+		$.each(localStorage, function(key) {
 			if(key.indexOf("channel-") >= 0) {
 				window.localStorage.removeItem(key);
 			}
 		});
-		
-		location.reload();
+
+		setTimeout(function() {
+			_this.removeClass('db-icon-spin');
+		}, 1000);
+
+		loadChannels();
 	});
+
+	/**
+	 * 	Toggles the use of RSS on or off, depending on the current state.
+	 */
+	$('[data-func="rss-toggle"]').on('click', function() {
+		USING_RSS = !USING_RSS;
+		localStorage.setItem('rss-use', USING_RSS);
+	
+		changeFetchIcon();
+		
+		showToast((USING_RSS) ? 'Using RSS for data fetching' : 'Using API for data fetching');
+	});
+	
+	function changeFetchIcon() {
+		let elem = $('[data-func="rss-toggle"]');
+		
+		if(USING_RSS) {
+			elem.removeClass('db-icon-plug');
+			elem.addClass('db-icon-rss');
+		} else {
+			elem.removeClass('db-icon-rss');
+			elem.addClass('db-icon-plug');
+		}
+	}
 	
 	/**
 	* 	Callback for the seach button.
@@ -233,7 +299,7 @@ $(document).on('ready', function() {
 		
 		// Start the search
 		$.ajax({
-			url:"https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + searchValue + "&type=video&order=relevance&relevanceLanguage=NL&key=" + YOUTUBE_KEY + "&maxResults=30",
+			url:"https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + searchValue + "&type=video&order=relevance&relevanceLanguage=NL&key=" + YOUTUBE_KEY + "&maxResults=6",
 			type:"GET",
 			async: true,
 			cache: false,
@@ -284,7 +350,9 @@ $(document).on('ready', function() {
 	function addInnerChannel(channelId) {
 		let element = document.createElement('div');
 		element.setAttribute('class', CHANNEL_CLASSES);
-		element.setAttribute('data-id', channelId);
+
+		if(channelId)
+			element.setAttribute('data-id', channelId);
 
 		element.innerHTML = '' +
 			'<div class="channel__header">' +
@@ -339,22 +407,42 @@ $(document).on('ready', function() {
 	function formatVideo(videos) {
 		let videoCache = [];
 		let videoTemp = {};
-		
-		$.each(videos, function(key, value) {
-			videoTemp = {
-				id: value.id.videoId,
-				title: escapeHtml(value.snippet.title),
-				publishedAt: value.snippet.publishedAt,
-				thumbnail: value.snippet.thumbnails.medium.url,
-				channel: escapeHtml(value.snippet.channelTitle)
-			};
-			
-			videoCache.push(videoTemp);
-		});
+
+		if(USING_RSS) {
+			$.each(videos, function(key, value) {
+				if(key === VIDEO_AMOUNT)
+					return false;
+
+				let item = $(value);
+				let videoId = item.find('yt\\:videoId').text();
+
+				videoTemp = {
+					id: videoId,
+					title: item.find('title').text(),
+					publishedAt: item.find('published').text(),
+					thumbnail: String.format('https://i.ytimg.com/vi/{0}/mqdefault.jpg', videoId),
+					channel: item.find('author').find('name').text()
+				};
+
+				videoCache.push(videoTemp);
+			});
+		} else {
+			$.each(videos, function(key, value) {
+				videoTemp = {
+					id: value.id.videoId,
+					title: escapeHtml(value.snippet.title),
+					publishedAt: value.snippet.publishedAt,
+					thumbnail: value.snippet.thumbnails.medium.url,
+					channel: escapeHtml(value.snippet.channelTitle)
+				};
+
+				videoCache.push(videoTemp);
+			});
+		}
 		
 		return videoCache;
 	}
-	
+
 	/**
 	* 	Escapes strings to make sure the text is safe.
 	*
@@ -390,6 +478,13 @@ $(document).on('ready', function() {
 		} else {
 			return Math.round(elapsed / 31536000) + ' years ago';   
 		}
+	}
+	
+	function showToast(value) {
+		$('.toast').text(value).fadeIn(400);
+		setTimeout(function() {
+			$('.toast').fadeOut(250);
+		}, 3000);
 	}
 });
 

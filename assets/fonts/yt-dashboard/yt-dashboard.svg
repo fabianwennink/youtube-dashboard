@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2019 by original authors @ fontello.com</metadata>
+<defs>
+<font id="yt-dashboard" horiz-adv-x="1000" >
+<font-face font-family="yt-dashboard" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="cog" unicode="&#xe800;" d="M760 350q0-72 80-122-12-40-34-82-70 18-136-44-54-58-34-136-40-20-84-36-46 82-132 82t-132-82q-44 16-84 36 20 80-34 136-54 54-136 34-14 26-34 82 82 52 82 132 0 72-82 124 20 56 34 82 74-18 136 44 54 56 34 136 42 22 84 34 46-80 132-80t132 80q42-12 84-34-20-78 34-136 66-62 136-44 22-42 34-82-80-50-80-124z m-340-182q76 0 129 53t53 129-53 130-129 54-129-54-53-130 53-129 129-53z" horiz-adv-x="840" />
+
+<glyph glyph-name="rss" unicode="&#xe801;" d="M0 730q314 0 537-223t223-537l-118 0q0 266-188 453t-454 187l0 120z m0-238q218 0 371-153t153-369l-118 0q0 166-119 285t-287 119l0 118z m114-296q46 0 80-33t34-81q0-46-34-79t-80-33-80 33-34 79q0 48 34 81t80 33z" horiz-adv-x="760" />
+
+<glyph glyph-name="arrows-ccw" unicode="&#xe802;" d="M186 140l116 116 0-292-276 16 88 86q-116 122-114 290t120 288q100 100 240 116l4-102q-100-16-172-88-88-88-90-213t84-217z m332 598l276-16-88-86q116-122 114-290t-120-288q-96-98-240-118l-2 104q98 16 170 88 88 88 90 213t-84 217l-114-116z" horiz-adv-x="820" />
+
+<glyph glyph-name="plug" unicode="&#xf1e6;" d="M979 597q21-21 21-50t-21-51l-223-223 83-84-89-89q-91-91-217-104t-230 56l-202-202h-101v101l202 202q-69 103-56 230t104 217l89 89 84-83 223 223q21 21 51 21t50-21 21-50-21-51l-223-223 131-131 223 223q22 21 51 21t50-21z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>

@@ -1,6 +1,7 @@
-$video-amount: 5;
+$video-amount: 4;
 $video-width: 210px;
-$video-right-margin: 8px;
+$video-right-margin: ($video-amount * 2px);
+$channel-video-right-margin: $video-right-margin + 2px;
 
 * {
   margin: 0;
@@ -59,17 +60,17 @@ a {
   left: 0;
   right: 0;
   top: 0;
-  background: #232323;
+  background: rgba(35, 35, 35, 0.98);
   z-index: 999;
   height: 54px;
-}
 
-#header h3 {
-  text-align: center;
-  width: 100%;
-  padding: 8px 0;
-  font-size: 28px;
-  font-weight: 400;
+  h3 {
+    text-align: center;
+    width: 100%;
+    padding: 8px 0;
+    font-size: 28px;
+    font-weight: 400;
+  }
 }
 
 #content {

@@ -1,10 +1,15 @@
 @import 'base/base';
 @import 'base/grid';
+@import 'base/font';
 
 @import 'layout/channel';
 @import 'layout/video';
 
 @import 'components/player';
+
+$search-field-width: 700px;
+$search-button-width: 65px;
+$search-bar-width: 500px - $search-button-width;
 
 .clear-cache,
 .stop-searching {
@@ -23,13 +28,27 @@
   }
 }
 
+.header-icon {
+  display: inline-block;
+  float: right;
+  color: #d9d9d9;
+  font-size: 1.8rem;
+  margin: 1px 0 0 20px;
+
+  &:hover,
+  &:active {
+    color: #afafaf;
+    cursor: pointer;
+  }
+}
+
 .search {
   height: 28px;
   margin: 5px auto;
-  width: 700px;
+  width: $search-field-width;
 
   input {
-    width: 500px;
+    width: $search-bar-width;
     height: 24px;
     background-color: #121212;
     border: 1px solid #343434;
@@ -53,7 +72,7 @@
     padding: 0 20px;
     color: #dedede;
     border-radius: 0 2px 2px 0 !important;
-    min-width: 65px;
+    min-width: $search-button-width;
     height: 30px;
     float: left;
 

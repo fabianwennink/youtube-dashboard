@@ -5,8 +5,12 @@
   height: 230px;
   width: $video-width;
   max-width: $video-width;
-  margin-right: $video-right-margin;
+  margin-right: $channel-video-right-margin;
   margin-bottom: 24px;
+
+  &:nth-child(#{$video-amount}) {
+    margin-right: 0;
+  }
 
   &:hover {
     opacity: 0.9;
