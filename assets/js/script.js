@@ -3,8 +3,10 @@ $(document).on('ready', function() {
 	// YOUTUBE_KEY will be included via gulp (key.js file will be included - not uploaded)
 
 	const VIDEO_AMOUNT = 4;
+	const SEARCH_VIDEO_AMOUNT = 10;
 	const CHANNEL_CLASSES = 'channel col-6-l col-6-m col-12-s';
 	const YOUTUBE_API_URL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&channelId={0}&order=date&key={1}&maxResults={2}';
+	const YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q={0}&type=video&order=relevance&key={1}&maxResults={2}';
 	const ESCAPE_ENTITY_MAP = {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '/': '&#x2F;', '`': '&#x60;', '=': '&#x3D;'};
 
 	const CORS_FIXER_URL = 'https://cors-anywhere.herokuapp.com/';
@@ -188,8 +190,8 @@ $(document).on('ready', function() {
 	*	empty, it will abort the function.
 	*/
 	$('.search__button').on('click', searchCallback);
-	$(".search__input").on('keypress', function() {
-		if (event.which === 13) searchCallback();
+	$(".search__input").on('keypress', function(e) {
+		if (e.which === 13) searchCallback();
 	});
 
 	// Stop searching button
@@ -296,8 +298,8 @@ $(document).on('ready', function() {
 		
 		// Start the search
 		$.ajax({
-			url:"https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + searchValue + "&type=video&order=relevance&relevanceLanguage=NL&key=" + YOUTUBE_KEY + "&maxResults=6",
-			type:"GET",
+			url: String.format(YOUTUBE_SEARCH_URL, searchValue, YOUTUBE_KEY, SEARCH_VIDEO_AMOUNT),
+			type: "GET",
 			async: true,
 			cache: false,
 			success:function(data){
@@ -307,9 +309,8 @@ $(document).on('ready', function() {
 
 				// Create the formatted array
 				let videos = $( ".channel__search" ).find(".channel__videos");
+				let formattedVideos = formatVideo(data.items, true);
 
-				let formattedVideos = formatVideo(data.items);
-				
 				$.each(formattedVideos, function(key, value) {
 					videos.append(addVideo(value));
 				});
@@ -375,7 +376,7 @@ $(document).on('ready', function() {
 			let channelCache = {
 				id: channelId,
 				name: channelName,
-				items: formatVideo(videos)
+				items: formatVideo(videos, false)
 			};
 
 			localStorage.setItem("channel-" + channelId, JSON.stringify(channelCache));
@@ -398,14 +399,15 @@ $(document).on('ready', function() {
 	/**
 	*	Takes the YouTube video arrays and formats it in a way that it can
 	*	be used by the system.
-	*	
+	*
 	*	@param {array} videos - The array of videos fetched from YouTube.
+	*	@param {boolean} isSearching - Are the results from a search request?
 	*/
-	function formatVideo(videos) {
+	function formatVideo(videos, isSearching) {
 		let videoCache = [];
 		let videoTemp = {};
 
-		if(USING_RSS) {
+		if(USING_RSS && !isSearching) {
 			$.each(videos, function(key, value) {
 				if(key === VIDEO_AMOUNT)
 					return false;
