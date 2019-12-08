@@ -87,7 +87,6 @@ $(document).on('ready', function() {
 		});
 
 		channels.forEach(function(channel) {
-			console.log(USING_RSS);
 
 			// Add the elements
 			let _this = $(".channel[data-id='" + channel +"']");
@@ -151,8 +150,6 @@ $(document).on('ready', function() {
 							// Load the cache right away, required since the addVideo() function
 							// expects a certain array format.
 							channelCache = loadCache(channel);
-
-							console.log(channelCache);
 
 							$.each(channelCache.items, function(key, value) {
 								videos.append(addVideo(value));
