@@ -1,0 +1,153 @@
+@import 'base/base';
+@import 'base/grid';
+@import 'base/fonts';
+
+@import 'helpers/animations';
+
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/channel';
+@import 'layout/video';
+@import 'layout/started';
+
+@import 'components/player';
+@import 'components/loader';
+
+@import 'helpers/queries';
+
+$search-field-width: 515px;
+$search-button-width: 65px;
+$search-bar-width: 500px - $search-button-width;
+
+.clear-cache,
+.stop-searching {
+  color: #ffffff;
+  border-radius: 2px;
+  letter-spacing: .007px;
+  background: #ff0000;
+  padding: 6px 16px;
+  margin: 5px auto 4px;
+  font-size: 14px;
+  display: inline-block;
+  float: right;
+
+  &:hover {
+    background: #ff2323;
+  }
+}
+
+.header-icon {
+  display: inline-block;
+  float: right;
+  color: #d9d9d9;
+  font-size: 1.8rem;
+  margin: 1px 0 0 20px;
+
+  &:hover,
+  &:active {
+    color: #afafaf;
+    cursor: pointer;
+  }
+}
+
+.search {
+  height: 28px;
+  margin: 5px auto;
+  width: $search-field-width;
+
+  &__button {
+    background: #343434;
+    border: 0;
+    font-size: 15px;
+    padding: 0 20px;
+    color: #dedede;
+    border-radius: 0 2px 2px 0 !important;
+    min-width: $search-button-width;
+    height: 30px;
+    float: left;
+
+    &:hover {
+      background: hsla(0, 0%, 100%, .09);
+      transition: background .1s ease;
+    }
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+input {
+  width: $search-bar-width;
+  height: 24px;
+  background-color: #121212;
+  border: 1px solid #343434;
+  padding: 2px 6px;
+  border-radius: 2px 0 0 2px;
+  outline: 0;
+  color: #dedede;
+  font-size: 15px;
+  font-weight: 500;
+  float: left;
+
+  &:focus {
+    border-color: #065fd4;
+  }
+}
+
+.logo {
+  height: 28px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+
+.new-badge {
+  background: #252525;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 2px 4px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 12px;
+  color: #A8A8A8;
+}
+
+.new-badge::selection {
+  background: none;
+}
+
+.button {
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background .1s linear;
+  outline: 0;
+
+  &:hover {
+    transition: background .1s linear;
+  }
+}
+
+@-webkit-keyframes spinLoader {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spinLoader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.hide {
+  display: none;
+  visibility: hidden;
+}

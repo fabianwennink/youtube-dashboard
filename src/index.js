@@ -1,17 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import * as Redux from 'redux';
+import * as ReactRedux from 'react-redux';
+import thunkMiddleware from 'redux-thunk'
+import {logger, reducers} from './app/reducers';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+// Styling
+import './assets/scss/styles.scss';
+import App from './app/components/App';
+import {apiMiddleware} from './app/middleware/api.middleware';
+import {loadApiKey} from './app/actions/settings.actions';
+
+// Redux store
+const middleware = [thunkMiddleware, apiMiddleware, logger];
+const store = Redux.createStore(reducers, Redux.compose(
+    Redux.applyMiddleware(...middleware)
+));
+
+// Create the main component.
+const mainComponent = (
+    <ReactRedux.Provider store={store}>
+        <App />
+    </ReactRedux.Provider>
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// Load the credentials from the local storage.
+store.dispatch(loadApiKey());
+
+ReactDOM.render(mainComponent, document.getElementById('root'));

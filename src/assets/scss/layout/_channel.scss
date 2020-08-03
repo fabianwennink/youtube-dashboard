@@ -1,0 +1,64 @@
+.channel {
+  display: inline-block;
+  position: relative;
+  height: auto;
+  border-radius: 2px;
+  padding-bottom: 40px;
+
+  &:hover {
+    .drag-button {
+      display: block;
+    }
+  }
+
+  &__header {
+    overflow: auto;
+    height: 2rem;
+    cursor: default;
+  }
+
+  &__title {
+    overflow: hidden;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #fff;
+    text-decoration: none;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &__inner {
+    overflow: auto;
+    position: relative;
+    overflow-x: scroll;
+  }
+
+  &__videos {
+    width: $video-width * $video-amount + ($video-amount * $video-right-margin);
+    overflow: auto;
+  }
+
+  &__search {
+    width: 100%;
+
+    .channel {
+      width: 100%;
+    }
+
+    .channel__videos {
+      width: 100%;
+
+      .video {
+        margin-right: 20px;
+      }
+    }
+  }
+
+  // Dragging effect
+  .ui-draggable-dragging {
+    border: -2px dashed #272727;
+  }
+}

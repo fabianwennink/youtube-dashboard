@@ -1,0 +1,23 @@
+.started {
+  text-align: center;
+
+  &__key {
+    float: none;
+    margin: 20px 0;
+
+    &-input {
+      float: none;
+      background: #151515;
+      padding: 2px 10px;
+      height: 30px;
+    }
+
+    &-button {
+      
+    }
+  }
+
+  &__help {
+    font-size: 13px;
+  }
+}

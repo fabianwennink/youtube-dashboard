@@ -1,0 +1,19 @@
+#header {
+  display: table;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: rgba(35, 35, 35, 0.98);
+  z-index: 999;
+  height: 54px;
+
+  h3 {
+    text-align: center;
+    width: 100%;
+    padding: 8px 0;
+    font-size: 28px;
+    font-weight: 400;
+  }
+}

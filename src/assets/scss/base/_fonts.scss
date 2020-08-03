@@ -1,0 +1,49 @@
+@font-face {
+  font-family: 'yt-dashboard';
+  src: url('../../fonts/yt-dashboard/yt-dashboard.eot?66103032');
+  src: url('../../fonts/yt-dashboard/yt-dashboard.eot?66103032#iefix') format('embedded-opentype'),
+  url('../../fonts/yt-dashboard/yt-dashboard.woff2?66103032') format('woff2'),
+  url('../../fonts/yt-dashboard/yt-dashboard.woff?66103032') format('woff'),
+  url('../../fonts/yt-dashboard/yt-dashboard.ttf?66103032') format('truetype'),
+  url('../../fonts/yt-dashboard/yt-dashboard.svg?66103032#yt-dashboard') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
+[class^="db-icon-"]:before, [class*=" db-icon-"]:before {
+  font-family: "yt-dashboard", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.db-icon-cog:before { content: '\e800'; }
+
+.db-icon-rss:before { content: '\e801'; }
+
+.db-icon-refresh,
+.db-icon-reload {
+  &:before { content: '\e802'; }
+}
+
+.db-icon-plug:before { content: '\f1e6'; }
+
+.db-icon-spin {
+  -moz-animation: spin 3s infinite linear;
+  -o-animation: spin 3s infinite linear;
+  -webkit-animation: spin 3s infinite linear;
+  animation: spin 3s infinite linear;
+  display: inline-block;
+}
