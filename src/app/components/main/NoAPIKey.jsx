@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {setApiKey} from '../actions/settings.actions';
+import {setApiKey} from '../../actions/settings.actions';
 
 class NoAPIKey extends React.Component {
 
@@ -18,11 +18,13 @@ class NoAPIKey extends React.Component {
                 <p>To get started, please enter your Google API key into the field below.</p>
                 <div className={'started__key'}>
                     <input placeholder={'Google API Key'} type={'text'} className={'started__key-input'}
+                           spellCheck={false} autoComplete={false}
                            onKeyPress={event => this.enterKeyAction(event)} />
-                           <button>Submit</button>
                 </div>
                 <p className={'started__help'}>
                     Need help creating an API key? Visit the <a href={'https://support.google.com/googleapi/answer/6158862?hl=en'}>Google Support page</a> for more instructions.
+                    <br/>
+                    You can always change the API key at a later point. RSS will be used as a fallback if the API quota is reached.
                 </p>
             </div>
         )

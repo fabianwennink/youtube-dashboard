@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
+import DragHandle from './sortable/ChannelDragHandle';
 
 class ChannelHeader extends React.Component {
 
@@ -18,7 +19,7 @@ class ChannelHeader extends React.Component {
                     rel={'nofollow noreferrer noopener'}>
                     {this.channelName}
                 </a>
-                {/*<span className={'drag-button button ui-sortable-handle'}>move</span>*/}
+                <DragHandle/>
             </div>
         );
     }

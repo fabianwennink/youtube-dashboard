@@ -4,7 +4,11 @@ import {FETCHED_SEARCHED_CHANNELS} from '../middleware/api.actions';
 
 const INITIAL_STATE = Object.freeze({
     searchTerm: '',
-    searchResult: [],
+    searchResult: [{
+        id: "UCRzBf605ucXv8pDMIEnCieg",
+        thumbnail: "https://yt3.ggpht.com/-p--emklPvLY/AAAAAAAAAAI/AAAAAAAAAAA/Zmlher_jIs4/s88-c-k-no-mo-rj-c0xffffff/photo.jpg",
+        title: "EEvisu"
+    }],
     isSearching: false
 });
 

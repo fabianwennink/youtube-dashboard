@@ -4,6 +4,12 @@
   height: auto;
   border-radius: 2px;
   padding-bottom: 40px;
+  width: 100%;
+  background: #111111;
+
+  &-container {
+    overflow-x: hidden;
+  }
 
   &:hover {
     .drag-button {
@@ -60,5 +66,35 @@
   // Dragging effect
   .ui-draggable-dragging {
     border: -2px dashed #272727;
+  }
+}
+
+.channel-search {
+  text-align: center;
+}
+
+.search-result {
+  &__thumbnail {
+    float: left;
+    img {
+      border-radius: 5px;
+    }
+  }
+
+  &__details {
+    float: left;
+    padding: 0 20px;
+  }
+
+  &__title {
+
+  }
+
+  &__id {
+
+  }
+
+  &__button {
+
   }
 }

@@ -11,7 +11,7 @@ class Channel extends React.Component {
         const channelVideos = this.props.data.videos;
 
         return (
-            <div className={'channel col-6-l col-6-m col-12-s'} data-id={channelId}>
+            <div className={'channel'}>
                 <ChannelHeader id={channelId} name={channelName} />
                 <ChannelContent id={channelId} name={channelName} videos={channelVideos} />
             </div>

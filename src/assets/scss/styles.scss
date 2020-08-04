@@ -13,8 +13,6 @@
 @import 'components/player';
 @import 'components/loader';
 
-@import 'helpers/queries';
-
 $search-field-width: 515px;
 $search-button-width: 65px;
 $search-bar-width: 500px - $search-button-width;
@@ -114,8 +112,21 @@ input {
   color: #A8A8A8;
 }
 
-.new-badge::selection {
-  background: none;
+.drag-button {
+  float: right;
+  background: #323232;
+  color: #fff;
+  padding: 3px 5px;
+  font-size: 11px;
+  display: none;
+  cursor: move !important;
+}
+
+.new-badge,
+.drag-button {
+  &::selection {
+    background: none;
+  }
 }
 
 .button {

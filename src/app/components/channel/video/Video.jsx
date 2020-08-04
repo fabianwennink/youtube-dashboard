@@ -41,11 +41,7 @@ class Video extends React.Component {
 
     playVideoAction = () => {
         if(!this.props.playerActive) {
-            if(window.screen.width <= 768) {
-                window.location = 'https://youtu.be/' + this.videoId;
-            } else {
-                this.props.playVideo(this.videoId, this.videoTitle);
-            }
+            this.props.playVideo(this.videoId, this.videoTitle);
         }
     };
 

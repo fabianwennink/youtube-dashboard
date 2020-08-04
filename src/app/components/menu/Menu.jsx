@@ -7,6 +7,15 @@ class Menu extends React.Component {
         return (
             <div id={'menu'}>
 
+                {
+                    // remove api key
+                    // max videos
+                    // search max results
+                    // clear all channels
+                    // lock moving
+                    // easy import /export channels
+                }
+
             </div>
         );
     }

@@ -1,10 +1,15 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 
-import Channel from './channel/Channel';
-import NoChannels from './NoChannels';
+import NoChannels from '../main/NoChannels';
+import ChannelContainer from './sortable/ChannelContainer';
+import {channelsSorted} from '../../actions/channel.actions';
 
 class Channels extends React.Component {
+
+    onSortEnd = ({oldIndex, newIndex}) => {
+        this.props.channelsSorted(this.props.channels, oldIndex, newIndex)
+    }
 
     render() {
         const hasChannels = this.props.channels.length > 0;
@@ -16,7 +21,7 @@ class Channels extends React.Component {
                     (isLoadingChannels)
                         ? <div className={'loader'} />
                         : (hasChannels)
-                            ? this.props.channels.map(channel => <Channel key={channel.id} data={channel} />)
+                            ? <ChannelContainer axis={'xy'} useDragHandle channels={this.props.channels} onSortEnd={this.onSortEnd} />
                             : <NoChannels />
                 }
             </div>
@@ -34,7 +39,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {}
+    return {
+        channelsSorted: (channels, oldIndex, newIndex) => dispatch(channelsSorted(channels, oldIndex, newIndex))
+    }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Channels);

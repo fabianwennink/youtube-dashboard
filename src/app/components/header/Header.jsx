@@ -13,11 +13,18 @@ class Header extends React.Component {
                     <HeaderLogo />
                     <HeaderSearchBox />
 
-                    <div className="col-2-l">
-                        <div className="header-icon"><i className="db-icon-cog" data-func="settings"></i></div>
-                        <div className="header-icon"><i className="db-icon-rss" data-func="rss-toggle"></i></div>
-                        <div className="header-icon"><i className="db-icon-refresh" data-func="refresh"></i></div>
-                        <div className="stop-searching hide button">Stop searching</div>
+                    <div className={'col-2-l'}>
+                        <div className={'header-icon'}>
+                            <i className={'db-icon-cog'} title={'Settings'}/>
+                        </div>
+
+                        {
+                            (!this.props.isSearching)
+                                ? <div className={'header-icon'}>
+                                    <i className={'db-icon-refresh'} title={'Refresh'}/>
+                                </div>
+                                : <></>
+                        }
                     </div>
                 </div>
             </div>
@@ -28,7 +35,9 @@ class Header extends React.Component {
 // ------- REDUX -------
 
 const mapStateToProps = (state) => {
-    return {}
+    return {
+        isSearching: state.searching.isSearching
+    }
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -56,10 +56,12 @@ export const apiMiddleware = (store) => (next) => (action) => {
     const searchChannels = (key, searchTerm, maxVideos) => {
         const url = String.format(YOUTUBE_SEARCH_URL, searchTerm, key, maxVideos);
         quickFetch(url, 'GET', {}, (response) => {
+            console.log(response.items)
             const formattedResponse = response.items.map(item => {
                 return {
+                    id: item.snippet.channelId,
                     title: item.snippet.channelTitle,
-                    thumbnail: item.snippet.thumbnails.medium.url
+                    thumbnail: item.snippet.thumbnails.default.url
                 }
             });
 

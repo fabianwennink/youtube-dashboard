@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 
-import Footer from './footer/Footer';
-import VideoPlayer from './videoplayer/VideoPlayer';
-import Header from './header/Header';
-import {apiFetchChannelVideos} from '../middleware/api.actions';
-import Menu from './menu/Menu';
-import Channels from './Channels';
-import SearchResult from './SearchResult';
+import Footer from '../footer/Footer';
+import VideoPlayer from '../videoplayer/VideoPlayer';
+import Header from '../header/Header';
+import {apiFetchChannelVideos} from '../../middleware/api.actions';
+import Menu from '../menu/Menu';
+import Channels from '../channel/Channels';
+import SearchResult from '../searching/SearchResult';
 import NoAPIKey from './NoAPIKey';
 
 class App extends React.Component {

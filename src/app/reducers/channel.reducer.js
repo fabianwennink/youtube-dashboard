@@ -1,39 +1,35 @@
 import {produce} from 'immer';
 import {FETCH_CHANNEL_VIDEOS, FETCHED_CHANNEL_VIDEOS} from '../middleware/api.actions';
 import {safeArray} from '../utils/mutation-util';
+import {CHANNELS_SORTED, LOAD_CHANNEL_ORDER} from '../actions/channel.actions';
 
 const INITIAL_STATE = Object.freeze({
     list: [
-        // {
-        //     id: 'UCBR8-60-B28hp2BmDPdntcQ', // YouTube
-        //     title: '',
-        //     videos: [],
-        //     position: 1
-        // },
-        // {
-        //     id: 'UCkRfArvrzheW2E7b6SVT7vQ', // YouTube Creators
-        //     title: '',
-        //     videos: [],
-        //     position: 2
-        // },
-        // {
-        //     id: 'UCMDQxm7cUx3yXkfeHa5zJIQ', // YouTube Help
-        //     title: '',
-        //     videos: [],
-        //     position: 3
-        // },
-        // {
-        //     id: 'UCEN58iXQg82TXgsDCjWqIkg', // YouTube Advertisers
-        //     title: '',
-        //     videos: [],
-        //     position: 4
-        // },
-        // {
-        //     id: 'UCK8sQmJBp8GCxrOtXWBpyEA', // Google
-        //     title: '',
-        //     videos: [],
-        //     position: 5
-        // }
+        {
+            id: 'UCBR8-60-B28hp2BmDPdntcQ', // YouTube
+            title: '',
+            videos: []
+        },
+        {
+            id: 'UCkRfArvrzheW2E7b6SVT7vQ', // YouTube Creators
+            title: '',
+            videos: []
+        },
+        {
+            id: 'UCMDQxm7cUx3yXkfeHa5zJIQ', // YouTube Help
+            title: '',
+            videos: []
+        },
+        {
+            id: 'UCEN58iXQg82TXgsDCjWqIkg', // YouTube Advertisers
+            title: '',
+            videos: []
+        },
+        {
+            id: 'UCK8sQmJBp8GCxrOtXWBpyEA', // Google
+            title: '',
+            videos: []
+        }
     ],
     loadingChannels: 0
 });
@@ -47,6 +43,18 @@ export const channelReducer = (state = INITIAL_STATE, action) =>
             case FETCHED_CHANNEL_VIDEOS:
                 addVideos(draft, action.data);
                 draft.loadingChannels = state.loadingChannels - 1;
+                return;
+            case CHANNELS_SORTED:
+                draft.list = action.data.list;
+                return;
+            case LOAD_CHANNEL_ORDER:
+                draft.list = action.data.list.map(channelId => {
+                    return {
+                        id: channelId,
+                        title: '',
+                        videos: []
+                    }
+                });
                 return;
             default:
                 return state;
